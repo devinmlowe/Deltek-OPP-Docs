@@ -1,0 +1,6 @@
+# PDF to Markdown Converter Requirements
+PyMuPDF==1.23.8        # For PDF processing and image extraction
+Pillow==10.1.0         # For additional image processing if needed
+python-dotenv==1.0.0   # For loading environment variables from .env file
+requests==2.31.0       # For HTTP requests to OpenRouter API
+rich==13.7.0           # For beautiful terminal UI with progress bars

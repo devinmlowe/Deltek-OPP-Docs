@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+
+# Environment variables
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.bak
+*.log
+
+# Keep the original PDF and converted docs
+# But ignore any temporary PDF processing files
+*.pdf.tmp
+
+# Conversion output and downloads
+docs_mistral/
+downloaded_document.pdf
+temp_chunks/
