@@ -18,6 +18,7 @@ ENV/
 *.swp
 *.swo
 *~
+.obsidian/
 
 # OS
 .DS_Store
