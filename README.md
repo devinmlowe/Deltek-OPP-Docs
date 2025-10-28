@@ -56,26 +56,27 @@ The converted markdown documentation will be available in the [`docs_mistral/`](
 ## 🔧 Technology Stack
 
 This conversion uses:
-- **OpenRouter API** - For accessing AI models via a unified API
-- **Claude Sonnet 4** - For intelligent document understanding and markdown generation
-- **Vision AI** - For accurate text extraction from PDF pages
-- **PyMuPDF (fitz)** - For PDF processing and page rendering
+- **PyMuPDF (fitz)** - For PDF text extraction
+- **OpenRouter API** - For accessing Claude Sonnet 4
+- **Claude Sonnet 4** - For intelligent markdown formatting and cleanup
+- **Rich** - For beautiful terminal progress display
 
 ## ✨ Features
 
-- ✅ **Intelligent OCR** - Uses Claude's vision capabilities to understand document structure
-- ✅ **Clean Output** - Automatically removes headers, footers, and page numbers
+- ✅ **Reliable Text Extraction** - Uses PyMuPDF for accurate text extraction from PDFs
+- ✅ **Clean Output** - Claude automatically removes headers, footers, and page numbers
 - ✅ **Table Formatting** - Preserves table structures in markdown format
 - ✅ **Code Preservation** - Maintains code examples and technical formatting
 - ✅ **GitHub-Compatible** - Outputs GitHub Flavored Markdown
-- ✅ **Large Document Support** - Handles 600+ page documents through intelligent chunking
+- ✅ **Large Document Support** - Processes documents in chunks of 50 pages
+- ✅ **Progress Tracking** - Beautiful terminal UI with progress bars
 
 ## 📊 Conversion Details
 
 - **Source Document**: Deltek Open Plan 8.5 Developer's Guide (600 pages)
-- **Processing Method**: Page-by-page vision analysis with Claude Sonnet 4
+- **Processing Method**: Text extraction + Claude formatting in 50-page chunks
 - **Output Format**: GitHub Flavored Markdown
-- **Estimated Cost**: ~$1.80 USD for full conversion
+- **Estimated Cost**: ~$2-3 USD for full conversion (600 pages in 12 chunks)
 - **Estimated Time**: 5-10 minutes for complete document
 
 ## 🔒 Security

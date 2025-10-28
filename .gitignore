@@ -33,6 +33,6 @@ Thumbs.db
 *.pdf.tmp
 
 # Conversion output and downloads
-docs_mistral/
+# docs_mistral/
 downloaded_document.pdf
 temp_chunks/
