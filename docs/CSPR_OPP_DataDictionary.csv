@@ -1,0 +1,141 @@
+,OPP Reserved Code Fields,,,,,,,,,
+,Act Code position,Code Level,Code Field Name,CSPR 3 System Code Position Requirement,CSPR 3 System Code Values Requirement,Code File Maintained By,Example(s),Baselined?,Description (w/ notes),Unrotated
+,1,Activity Level,Work Breakdown Structure             (BDS Programs - if no C4 control account assigned to task),Recommended (Mandatory by Process)         ,Either matches WBS in Cobra or is at a lower level                                   ,Program Focal,"1.3.1, 5150",Yes,"Work Breakdown Structure Code. Punctuated Significant or Fixed Format in OPP.  
+
+Note:  Field is not populated automatically.  During OPP/Cobra mapping, the Cobra assigned WBS is populated in the C_USERCHR01 field of the Control Account code value. 
+
+BDS Programs w/DFAR using Acumen and/or JSON must use this code field, otherwise:
+BDS Programs, refer to IPSG-9000-007 WBS, OBS, and CAM Fields for guidance on usage",Yes
+,2,Activity Level,Organizational Breakdown Structure                                                  (BDS Programs - if no C4 control account assigned to task),Recommended (Mandatory by Process)     ,Either matches OBS in Cobra or is at a lower level                                    ,Program Focal,"Wing IPT Manager, Fuselage AIT Manager, A00, AA0",,"Responsibility Breakdown Structure. Structure which breaks down responsibility from Program Manager to Assembly & Integration Teams (AIT's) and/or Integrated Product Teams (IPT's) down to Responsible Control/Cost Account Managers (CAM's).   
+
+Note:  Field is not populated automatically.  During OPP/Cobra mapping, the Cobra assigned OBS is populated in the C_USERCHR02 field of the Control Account code value.
+
+BDS Programs w/DFAR using Acumen and/or JSON must use this code field, otherwise:
+BDS Programs, refer to IPSG-9000-007 WBS, OBS, and CAM Fields for guidance on usage",Yes
+,3,Activity Level,Percent Complete Type,Recommended (Mandatory by Process),Predetermined,IP&S Home Office Tools Team,"R, S, U, T",,"Used to identify which type of Quantifiable Assess Percent Complete (QA%C) the activity is using.  When the backup data will be defined directly in OPP, otherwise leave blank.
+Programs refer to:  IPSG-9000-019 Quantifiable Backup Data",
+,4,Activity Level,Control Account,Mandatory,"Matches Control Accounts, flagged for OPP, in Cobra",Program Focal,HAA10AAL,Yes,"Unique Identifier within a Cobra Reporting Master, which identifies a control account. A control account is assigned to an intersection of a WBS and OBS and is the lowest level in Cobra where Budget (BCWS), Earned Value (BCWP) and Actuals (ACWP) are integrated.  Required for Cost/Schedule Integration.
+
+During OPP/Cobra mapping, the WBS, OBS, CAM, Planner information assigned in Cobra is automatically populated in the Code Value User Defined Fields of C_USERCHR01, C_USERCHR02, C_CAM, C_PLANNER.  This table should only ever be populated using the OPP/Cobra mapping, manual inputs can cause integration problems later.  
+Refer to:  IPSG-9000-007 WBS, OBS, and CAM Fields.
+",Yes
+,5,Activity Level,Integrated Master Plan,Recommended (Mandatory by process),Match approved IMP,Program Focal,1.1.1,,"Index # and description of Integrated Master Plan/Integrated Master Schedule item. Typically a punctuated significant code but could be fixed format.
+
+Programs with an IMP requirement, refer to:  IPSG-9000-012 IMS Content Requirements",Yes
+,6,Activity Level,Cost Class,Mandatory,Predetermined,IP&S Home Office Tools Team,"CB, C1, CK",Yes,Cost Class used to document and control baseline changes and approvals.  Mandatory for CD processing  & Change Control.,
+,7,Activity Level,Planner Name,Optional,-,Program Focal,"Historical:  Last_First>BEMS
+NOW:  Last_First_BEMS",,"Used to assign the planners name to the work package.  The description should contain the planner's name (last, first, MI recommended).",Yes
+,8,Activity Level,Status Focal,Recommended (Mandatory by Process)         ,-,Program Focal,"CAM Vis format: Historical:  Last_First>BEMS
+NOW:  Last_First_BEMS",,"Used to assign a Status Focal (CAM or Delegate) to an activity to allow statusing by a Status Focal in CAM Vis.  The description should contain the status focal's name (last, first, MI recommended)
+
+Note:  Field is not populated automatically.  During OPP/Cobra mapping, the Cobra assigned CAM is populated in the C_CAM field of the Control Account code value.  
+
+BDS Programs refer to:  IPSG-9000-007 'WBS, OBS, and CAM Fields' and IPSG-9000-012 'IMS Content Requirements' for guidance on usage",Yes
+,9,Activity Level,Integrated Scheduler,Recommended (Mandatory by process),-,Program Focal,"Historical:  Last_First>BEMS
+NOW:  Last_First_BEMS",,"Used to assign the schedulers name to the work package. The code description should be the scheduler's BEMS ID.
+
+Programs refer to:  IPSG-9000-003 Integrated Scheduler Code Field",Yes
+,10,Activity Level,Program Breakdown Structure,Optional,-,Program Focal,"ARC, MB1",,An alternate breakdown structure to segregate work within an IPT ,
+,11,Activity Level,Statement of Work Paragraph,Mandatory,Predetermined,Program Focal,1.1.1,Yes,"Index # and description of Program Statement of Work Paragraph. Typically a punctuated significant code but could be fixed format.
+
+Programs refer to:  IPSG-9000-012 IMS Content Requirements, DID, IPMR and IPMDAR",Yes
+,12,Activity Level,Contract Line Item Number,Optional,-,Program Focal,0001AA 0002AA 0002AB 0003,,Identifies Line Item Code in Contract which provides contractual funding for task being performed.,
+,13,Activity Level,Configuration Item or Model Code,Optional,-,Program Focal,"74A10000-1001, 13C OFP",,Identifier for hardware or software configuration end item such as Aircraft model code,Yes
+,14,Activity Level,Contract Data Requirements List,Optional,-,Program Focal,"A001, B003, M012",,Identifies Code corresponding to Contract Data Requirement List for activity being performed.,
+,15,Activity Level,Work Definition Document Material Type,Optional,Predetermined,IP&S Home Office Tools Team,Alum,,"Identifies type of material utilized on longest lead, most complex part on a particular drawing. Used in conjunction with part type, size & complexity code to identify applicable standard tasks and duration times for drawing/build to activities.  Required for MES Interface.",
+,16,Activity Level,Work Definition Document Part Type,Optional,Predetermined,IP&S Home Office Tools Team,Machine Extrusion,,"Identifies type of mfg process utilized on longest lead, most complex part on a particular drawing. Used in conjunction with material type, size & complexity code to identify applicable standard tasks and duration times for drawing/build to activities.  Required for MES Interface.",
+,17,Activity Level,Work Definition Document Size & Complexity,Optional,Predetermined,IP&S Home Office Tools Team,S3,,"Fields Size and Complexity have been combined to produce a two character code which has (sample) values of Small/Medium/Large for first position, Simple .. Extremely Complex 1-4. Code example represents Simple (size) that is Complex. Used in conjunction with material type & part type to identify applicable standard tasks and duration times for drawing/build to activities.  Required for MES Interface.",
+,18,Activity Level,Work Definition Document Type of Change/Key Deliverables,Optional,Predetermined,IP&S Home Office Tools Team,"DCN, EO, New, AV, TST, Fab",,Code which identifies type of change. This code determines standard template durations for Change Coordination & Release activities.  Required for MES Interface.  Is also used in ReMICS.,Yes
+,19,Activity Level,Work Definition Document Kind,Optional,Predetermined,IP&S Home Office Tools Team,"schematic, mock-up, FT",,"Used to categorize & identify major kinds of IPT Documents such as Production Drawings, Schematics, Mock-Up Drawings, Ground test Drawings, Flight Test Drawings, Procurement Specs, etc. Facilitates the filtering and sorting of IPT documents for reporting and metrics.",
+,20,Activity Level,Make/Buy,Mandatory by Process,,IP&S Home Office Tools Team,"M, B",,"Make/Buy code field to identify whether the part is to be made ('M') or purchased ('B').
+
+Mandatory by Process if Project is Associated with MES",
+,21,Activity Level,T&E Reference Number,Optional,-,Program Focal,-,,Identifier assigned by T&E to specific test activities. Facilitates filtering and sorting of specific sequences of test activates for reporting and metrics.,
+,22,Activity Level,Effectivity,Optional,-,Program Focal,"FT50, IB50",,Identifies unique code of Ground Test Article for 1st applicable Test Effectivity of particular non-recurring activity.,
+,23,Activity Level,Alternate Symbology,Optional,Predetermined,IP&S Home Office Tools Team,"BILLING $ EVENT, PROPOSED RESCHEDULE",,"Used to identify Billing Events, and schedule replans. Combined with Graphic Summarization Type and Tiered code files, flags how activity should be depicted graphically when shown on summary bars/symbols.  Will be also used with ReMICS to show Scheduling Metrics and Important Milestones",
+,24,Activity Level,Graphic Physical Position,Optional,Predetermined,IP&S Home Office Tools Team,UL1; LR2,,"This field allows a user, with an appropriate template, to ""force"" the milestone symbol, milestone description, and milestone date (text) to appear at various locations above/below a task bar.",
+,25,Activity Level,Reporting Activity,Optional,Predetermined,IP&S Home Office Tools Team,Yes,,Identifies the activity to be copied into the Month End OPP Project using the Month-End Closing tool.,
+,26,Activity Level,60/90 Day and Criticality Flag,Optional,Predetermined,IP&S Home Office Tools Team,"60/90, CP",,Flags criticality of activity from a overall program perspective (cost/sched/tech/risk).  Goes to ReMICS.,Yes
+,27,Activity Level,Linked Project Change Code,Optional,Predetermined,IP&S Home Office Tools Team,"Updated, Not Found, Summary",,Informs the user as to status of the Virtual Task after it has been added or updated.,
+,28,Activity Level,Tiering capable 60/90 Day and Criticality Flag,Optional,Predetermined,IP&S Home Office Tools Team,"60/90E, 60/90I, 60/90P,CPE, CPI, CPP",,Identifies activity to be included within a Scheduling Metrics count and the definition of the count.,
+,29,Activity Level,Performing Responsibility,Optional,-,Program Focal,"GLA,  CDF, MILLER",,Reference of the (single primary) person responsible for performing and completing this task/milestone. The code values should be the Standard ID and the description contain the name.,
+,30,Activity Level,Responsible Organization,Mandatory by process,-,Program Focal,"NGC, BAE, CUST, EXT, UA, MARGIN, MISC",,"Indentifies the organization that has responsibility for the task.  (either supplier, customer, Boeing (optional), production, unauthorized task, schedule margin, etc.)
+
+BDS Programs refer to IPSG-9000-002 Allowable Non-Resource Loaded IMS Activity Types and IPSG-9000-008 Integrated Scheduling Requirements Tailoring Matriz",
+,31,Activity Level,Risk Interface,Mandatory by Process,-,Program Focal,"P212, 15, 6432, SUP123, etc.",,"Used to identify the Risk # (from Risk Registry ID, BORIS ID, etc.) for the Mitigation Plan Steps included in the IMS.
+Programs ref to:  IPSG-9000-012 IMS Content Requirements.",
+,32,Activity Level,"Organizational Impact
+",Optional,-,Program Focal,"COMMON, CRITICAL & COMMON, CRITICAL",,"Organizational Impact identifies the impact to other organizations.
+
+BDS Programs - if contractual IMS CDRL and / or DFAR clause requirements, can not use to identify Hand-offs or SVTs (see IPSG-9000-006 and IPSG-9000-002)",
+,33,Activity Level,Schedule Change Authorization,Optional,-,Program Focal,"JAB, LEP",,Indicates that the cost class scheduler has analyzed the proposed baseline date changes and has determined that the dates will work in the schedule.,
+,34,Activity Level,Assembly Control Code (ACC),Mandatory by Process,-,Program Focal,"200, 201, 300",,"Numeric code assigned to each unit time assembly or major assembly position for release of MLP job paper, parts pick manifest and cost accumulation
+Required if Project is Associated with IGOLD",
+,35,Activity Level,Delete Me Flag,Mandatory,Predetermined,IP&S Home Office Tools Team,"YES, NO",Yes,"Flags activities that are to be zeroed out and removed from Cobra and OPP
+Mandatory for CD processing & Change Control.",
+,36,Activity Level,Alternate Breakdown Structure,Optional, -,Program Focal,"Engineering, Business Supplier, MFG",,Used to identify functionality area to perform the task.,
+,37,Activity Level,Effectivity,Mandatory by Process,,Program Focal,"YA001, YA002",,"Unique Identifier for a given aircraft.
+Required if Project is Associated with IGOLD",
+,38,Activity Level,Recurring/Non Recurring,Mandatory by Process,Predetermined,IP&S Home Office Tools Team,"REC, NONREC",,"Identifies recurring and non recurring activities for Estimate to Budget Baseline (EtBB) Best Practice
+Required if Project is Associated with EtBB",
+,39,Activity Level,Hours or Dollars,Mandatory by Process,Predetermined,IP&S Home Office Tools Team,"HOURS, DOLLARS",,"Identifies activity costs measured either in hours or dollars for Estimate to Budget Baseline (EtBB) Best Practive
+Required if Project is Associated with EtBB",
+,40,Activity Level,Level 3 Change Control,Mandatory by Process,Defined by Program (in proper format),Program Focal,,,"Identifies activies by Change Document number that will be integrated with Cobra using the Integration Wizard
+Required if Project is Level 3 Change Control (identified in Cobra)",
+,41,Activity Level,Material Code,Mandatory by Process,Predetermined,IP&S Home Office Tools Team,"Critical
+
+(Only 'Critical' should be used.  All others are no longer applicable and should not be selected)",,"Identifies Critical material represented in the IMS as 'Critical' (required).  
+Programs refer to:  IPSG-4711-003 'IMS Material Integration'",Yes
+,42,Activity Level,Schedule Risk Assessment,Mandatory,Predetermined,IP&S Home Office Tools Team,"DES.L.L, REQ.M.L, NR, IA, SYS.M.M",,The field allows users to assign a schedule risk code to an activity that is used by Risk Ranger to calculate the duration input values used in the schedule risk analysis process.,Yes
+,43,Activity Level,Reason Code - Actual Start,Mandatory by Process,Predetermined,IP&S Home Office Tools Team,"BOEING PREDECESSOR, TECHNICAL, SUSPENDED OPERATIONS",,CAM Visibility users will have to select a Reason code from the C43 code file when they input an Actual Start date which is later than the Baseline Start date.,Yes
+,44,Activity Level,ESGP Gate Closure Decision Milestone,Mandatory by Process         ,Predetermined,BDS IP&S Home Office Tools Team / BCA Core,"Gate 01, Gate 02, Gate 03…",,"This field allows users to identify Gate Closure Decision Milestone.  A pre set of milestones are provided for use.  
+Refer to BDS IPSG-9000-009 for more details.",Yes
+,45,Activity Level,Contract/Delivery Order/ECP Name,Mandatory by Process,-,Program Focal,"ESM 158, GSP OPT 2, LAIRCM 810 EQ",,This field is used for reporting. It contains a short description (20-30 characters) of the contract/delivery order/ECP.  The complete description can be included in the Code Description.,Yes
+,46,Activity Level,SPA Processed Indicator,Optional,Defined by Program (in proper format),Program Focal,SPA_MMMYYYY (i.e. SPA_Oct2020),,Identifies closed WPs impacted by a SPA implemented on the program.  These WPs end up disconnected with Cobra & further action may be needed,Yes
+,47,Activity Level,Commitment Schedule Type,Mandatory by Process,Predetermined,IP&S Home Office Tools Team,"i.e. Drawings, Procurement, Sub-Assembly, Qual Testing, etc.",,"Code C47 is Specific to the Commitment Scheduling Team, and their reporting requirement.  
+BDS Programs - refer to IPSG-9000-024 CSCC OPP INTSCH C47 Code Field.",Yes
+,48,Activity Level,Reason Code - Actual Finish,Mandatory by Process         ,Predetermined,IP&S Home Office Tools Team,"BOEING PREDECESSOR, TECHNICAL, SUSPENDED OPERATIONS",,CAM Visibility users will have to select a Reason code from the C48 code file when they input an Actual Finish date and the actual duration of the task is greater than the baselined duration.,Yes
+,49 - 50,Activity Level,{ reserved } - not available for program use,-,-,IP&S Home Office Tools Team,-,,"Reserved code ""positions"" for future use to be defined by IP&S Home Office",Yes
+,51-55,Activity Level,"Program Specific use.
+(unrotated)",Optional,Defined by Program,Program Focal,,,,Yes
+,56-99,Activity Level,"Program Specific use
+(rotated)",Optional,Defined by Program,Program Focal,-,,,No
+,1,Project Level,No Longer Used,,,N/A,N/A,,No Longer Cobra Program.  Handled in CSPR Options.  Data propulated in Project Level User Field (C_PRGM),
+,2,Project Level,CSPR_C2_CME_Program,Optional,Defined by Program,Program Focal,,,Month End Cobra Progra,
+,3,Project Level,CSPR_C3_IMICS,Mandatory by Process         ,Predetermined,IP&S Home Office Tools Team,,,ReMICS Flag,
+,4,Project Level,CSPR_C4_LINE_NUM,Optional,Defined by Program,Program Focal,,,Line Number,
+,5,Project Level,CSPR_C5_EFFECTIVITY,Optional,Defined by Program,Program Focal,,,Effectivity,
+,6,Project Level,CSPR_C6_MAJMIN_MODEL,Optional,Defined by Program,Program Focal,,,Major / Minor Model,
+,80,Project Level,SVD_C80_Project_Type,,Predetermined,IP&S Home Office Tools Team,"DEVELOPMENT
+GOVERNMENT
+PRODUCTION
+SUSTAINMENT",,Use in support of the BGS Schedule Visibiliy Data (SVD),
+,81,Project Level,SVD_C81_Prime_Contra,,Predetermined,IP&S Home Office Tools Team,"BCA
+BDS
+BGS",,Use in support of the BGS Schedule Visibiliy Data (SVD),
+,82,Project Level,SVD_C82_Beta,,Predetermined,IP&S Home Office Tools Team,"NO
+YES",,"Use in support of the BGS Schedule Visibiliy Data (SVD)
+Include in NPD or Do not include in NPD identification",
+,83,Project Level,SVD_C83_Platform_Mod,,Predetermined,IP&S Home Office Tools Team,"ex.  777X, APACHE, KC-46, PAR, V22",,Use in support of the BGS Schedule Visibiliy Data (SVD),
+,84,Project Level,SVD_C84_Customer_Rep,,Predetermined,IP&S Home Office Tools Team,"CDRL-SIMPLE COST MANAGEMENT
+CDRL-STREAMLINED PERFORMANCE MANAGEMENT
+DFAR - DFAR
+INTERNAL REPORTING ONLY-SIMPLE COST
+INTERNAL REPORTING ONLY-STREAMLINED",,Use in support of the BGS Schedule Visibiliy Data (SVD),
+,85,Project Level,SVD_C85_Sales_Type,,Predetermined,IP&S Home Office Tools Team,"DCS - Direct Commercial Sale
+FMS - Foreign Military Sale
+USG - US Government",,Use in support of the BGS Schedule Visibiliy Data (SVD),
+,86,Project Level,SVD_C86_Country,,Predetermined,IP&S Home Office Tools Team,"ex.  AUSTRALIA, ITALY, POLAND, USA",,Use in support of the BGS Schedule Visibiliy Data (SVD),
+,87,Project Level,SVD_C87_Agile_In_Use,,Predetermined,IP&S Home Office Tools Team,"NO
+YES",,"Use in support of the BGS Schedule Visibiliy Data (SVD)
+(Has tasks in an Agile Backlog or Does not have Tasks in an Agile Backlog)",
+,88,Project Level,SVD_C88_In_a_Multi,,Predetermined,IP&S Home Office Tools Team,"NO
+YES",,"Use in support of the BGS Schedule Visibiliy Data (SVD)
+(The project is in a multi or The project is not in a multi)",
+,89,Project Level,SVD_C89_Code_Alpha,,Predetermined,IP&S Home Office Tools Team,"MESA
+OKLAHOMA CITY
+PHILADELPHIA
+SAINT LOUIS",,Use in support of the BGS Schedule Visibiliy Data (SVD),
+,9,Project Level,C09_CAL_OPT,,Predetermined,IP&S Home Office Tools Team,"DEFAULT
+TAPESTRY",,Accounting Calendar Options,
+,90,Project Level,SVD_C90_Code_Delta,,Defined by Program,IP&S Home Office Tools Team,,,,
