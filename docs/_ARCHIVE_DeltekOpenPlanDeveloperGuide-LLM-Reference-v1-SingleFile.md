@@ -1,3 +1,22 @@
+# ⚠️ ARCHIVED - Version 1.0 (Single File)
+
+**This file has been archived and replaced by a modular structure.**
+
+**Current Documentation (v2.0):**
+- **[Critical-Warnings-and-Patterns.md](Critical-Warnings-and-Patterns.md)** - Fatal mistakes & required patterns (~2k tokens)
+- **[VBA-API-Reference.md](VBA-API-Reference.md)** - Complete VBA OLE Automation API (~13k tokens)
+- **[Import-Export-Reference.md](Import-Export-Reference.md)** - Transfer.dat scripting reference (~11k tokens)
+- **[Calculated-Fields-Reference.md](Calculated-Fields-Reference.md)** - Expression language for formulas (~9k tokens)
+- **[SYSTEM-PROMPT-Template.md](SYSTEM-PROMPT-Template.md)** - Template for Custom GPT configuration
+- **[README-Documentation.md](README-Documentation.md)** - Complete documentation guide
+
+**Why the change?**
+The modular structure provides better semantic boundaries for RAG retrieval, inline debugging tips with each section, easier maintenance, and topic isolation for focused conversations.
+
+**Archive Date:** 2025-10-28
+
+---
+
 # Deltek Open Plan® API Reference for LLM Assistants
 
 ## Quick Reference
