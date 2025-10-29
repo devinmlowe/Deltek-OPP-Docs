@@ -156,9 +156,10 @@ Open Plan optimizes expressions by identifying repeated subexpressions. For expl
 - Variable names: no spaces, avoid field/function name conflicts
 - Not case sensitive
 - Format: `<variable_name> = <expression>`
+- **⚠️ CRITICAL:** Variables MUST be defined before referenced (order matters!)
 - Can reference previously defined variables
 
-**Example:**
+**Simple Example:**
 ```
 BEGIN VARIABLES
 X = DATEDIFFERENCE(ASDATE, TIMENOW())
@@ -168,12 +169,38 @@ END VARIABLES
 IIF(Y>0, "OK", "Warning")
 ```
 
+**Complex Enterprise Example (Boeing):**
+```
+BEGIN VARIABLES
+TNplus30d = DATEFORMAT(DATEADD(TIMENOW(), |30d|, CLH_ID), "%M/%D/%Y")
+TNplus60d = DATEFORMAT(DATEADD(TIMENOW(), |60d|, CLH_ID), "%M/%D/%Y")
+NotSumOrExtSub = IIF(ACT_TYPE<>[Subproject] AND ACT_TYPE<>[External Subproject], "True", "False")
+END VARIABLES
+
+IIF(COMPSTAT=[COMPLETE], "Complete",
+  IIF(BSDATE={}, "No Baseline",
+    IIF(NotSumOrExtSub="True" AND (BSDATE<>{} AND TIMENOW()>=BSDATE), "Late",
+      IIF(ESDATE<={} OR TIMENOW()<ESDATE, "Not Started",
+        IIF(TIMENOW()>=ESDATE AND TIMENOW()<EFDATE, "On Schedule",
+          IIF(TIMENOW()>=EFDATE, "Should Be Complete", "Unknown"))))))
+```
+
 **Benefits:**
 1. More readable and maintainable
 2. Faster parsing of complex expressions
 3. Subexpression evaluated once per cell
+4. Simplifies debugging - test variables individually
 
-✅ **Best Practice:** Use variables for complex nested expressions
+**⚠️ Known Bug/Defect:**
+The `<` operator does not parse correctly when used with user-defined variables. Use `>=` instead.
+
+**Example:**
+```
+❌ WRONG: IIF(MyVariable < |5d|, "Short", "Long")  # Parser error
+✅ CORRECT: IIF(MyVariable >= |5d|, "Long", "Short")  # Works properly
+```
+
+✅ **Best Practice:** Use variables for complex nested expressions and expressions longer than 500 characters
 
 ---
 
@@ -803,26 +830,138 @@ For complete reference on additional functions including MAX, MIN, MID, MONTH, N
 
 ---
 
+## 🏢 Boeing Enterprise Best Practices
+
+### Naming Convention
+**Format:** `YourID_CF_Description`
+
+**Examples:**
+- `DLOWE_CF_StatusFlag`
+- `JSMITH_CF_ScheduleVariance`
+- `ABROWN_CF_ResourceCount`
+
+**Rules:**
+- Maximum 60 characters for calculated field name
+- Use your BEMS ID or last name as prefix
+- Use underscore separators
+- Keep description clear and concise
+- Avoid special characters beyond underscore
+
+### Expression Length Limits
+- **Maximum:** 4,096 characters per calculated field expression
+- **Recommended:** Under 2,000 characters for maintainability
+- **Strategy:** Break very complex logic into multiple calculated fields
+
+### Development Workflow
+1. **Build Bottom-Up:** Start with inner functions, test, then add outer logic
+2. **Test Incrementally:** Test each piece before combining
+3. **Use Variables:** For expressions over 500 characters, use BEGIN VARIABLES block
+4. **Document:** Add comments in description field explaining complex logic
+5. **Peer Review:** Have another scheduler review complex formulas
+
+### Text Editor Requirements
+**⚠️ CRITICAL:** Use Notepad or similar plain text editor. DO NOT use Microsoft Word!
+
+**Why?**
+- Word formats quotation marks to "smart quotes" (ASCII characters: " " instead of ")
+- These ASCII characters cause parser errors that are difficult to diagnose
+- Word may add hidden formatting characters
+
+**Recommended Editors:**
+- Windows Notepad
+- Notepad++
+- Visual Studio Code
+- Any plain text editor without auto-formatting
+
+**Safe Workflow:**
+1. Write complex expressions in plain text editor
+2. Test pieces in Open Plan calculated field dialog
+3. Copy/paste from plain text editor into Open Plan
+4. Never copy from Word, PowerPoint, or formatted documents
+
+---
+
 ## 🐛 Debugging Guide
+
+### Most Common Errors (Boeing Training Data)
+
+#### Error #1: "The parser was not able to interpret the calculated field expression"
+**Cause:** Syntax error in expression
+
+**Common Mistakes:**
+- Missing or mismatched parentheses
+- Wrong constant delimiters: `{date}`, `|duration|`, `"text"`, `[enum]`
+- Misspelled function names
+- Using smart quotes from Word instead of plain quotes
+- Missing operators between terms
+
+**Fix:**
+1. Check all parentheses are balanced
+2. Verify constant syntax: `{01JAN01}`, `|5d|`, `"text"`, `[ASAP]`
+3. Use plain text editor (Notepad), not Word
+4. Break complex expression into smaller parts and test each
+
+**Example:**
+```
+❌ WRONG: IIF(ESDATE > 01JAN01, "Late", "OK")  # Missing { }
+✅ CORRECT: IIF(ESDATE > {01JAN01}, "Late", "OK")
+
+❌ WRONG: IIF(DURATION > 5d, "Long", "Short")  # Missing | |
+✅ CORRECT: IIF(DURATION > |5d|, "Long", "Short")
+```
+
+#### Error #2: "Incompatible data types in expression"
+**Cause:** Type mismatch in operation or missing enumerated value brackets
+
+**Common Mistakes:**
+- Comparing different data types (date to string, duration to number)
+- Missing square brackets on enumerated values
+- IIF() branches returning different data types
+- Wrong function parameter types
+
+**Fix:**
+1. Check enumerated values have square brackets: `[ASAP]`, `[Start Milestone]`
+2. Ensure IIF() true/false branches return same data type
+3. Verify function parameters match expected types
+4. Use type conversion functions: CTOD(), STR(), VAL()
+
+**Examples:**
+```
+❌ WRONG: IIF(ACT_TYPE = ASAP, "OK", "Not OK")  # Missing [ ]
+✅ CORRECT: IIF(ACT_TYPE = [ASAP], "OK", "Not OK")
+
+❌ WRONG: IIF(ESDATE > {01JAN01}, "Late", 0)  # Mixed types
+✅ CORRECT: IIF(ESDATE > {01JAN01}, "Late", "On Time")
+```
 
 ### "Unknown field name" Error
 1. ✅ Check: Using field name (ESDATE) not display name ("Early Start")?
 2. ✅ Check: Field exists in current table?
 3. ✅ Check: Linked table syntax correct (C1.DESCRIPTION)?
+4. ✅ Check: Use Fields dialog to verify exact field name
 
 ### "Circular reference" Error
 1. ✅ Check: Calculated field not referencing itself?
 2. ✅ Check: No chain of calculated fields that loops back?
 
-### Syntax Error
-1. ✅ Check: Proper constant delimiters ({ } for dates, | | for durations)?
-2. ✅ Check: Matching parentheses in nested functions?
-3. ✅ Check: Function names spelled correctly?
+### User-Defined Variable Errors
+1. ✅ Check: Variable defined before referenced?
+2. ✅ Check: Variable name doesn't conflict with field/function name?
+3. ✅ Check: Using `>=` instead of `<` operator (known bug)?
+4. ✅ Check: BEGIN VARIABLES and END VARIABLES properly spelled?
 
-### Wrong Result Type
-1. ✅ Check: Operation produces expected type (duration + duration = duration)?
-2. ✅ Check: IIF() branches return same data type?
-3. ✅ Check: Function parameters are correct data types?
+### Wrong Result/Blank Cell
+1. ✅ Check: Function returns expected data type?
+2. ✅ Check: All IIF() branches return same data type?
+3. ✅ Check: Empty/null values handled properly?
+4. ✅ Check: Calendar specified for date operations?
+5. ✅ Check: Field has data in current record?
+
+### Performance Issues (Expression Recalculating Slowly)
+1. ✅ Check: Using variables for repeated subexpressions?
+2. ✅ Check: Avoiding nested GET_* functions?
+3. ✅ Check: Expression length under 2,000 characters?
+4. ✅ Check: Not using EVAL() unnecessarily (slow function)?
 
 ---
 

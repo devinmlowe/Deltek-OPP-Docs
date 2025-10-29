@@ -1,10 +1,12 @@
 # Deltek Open Plan Documentation - README
 
-This directory contains optimized documentation for **Deltek Open Plan® Professional** OLE Automation, organized as a modular knowledge base for Custom GPT applications.
+This directory (`docs/llm-knowledge-base/`) contains optimized documentation for **Deltek Open Plan® Professional** OLE Automation, organized as a modular knowledge base for Custom GPT applications.
 
 ---
 
 ## 📁 File Structure
+
+**All reference files are located in:** `/docs/llm-knowledge-base/`
 
 ### Reference Files (Attach to Custom GPT Knowledge Base)
 
@@ -13,24 +15,27 @@ This directory contains optimized documentation for **Deltek Open Plan® Profess
 | **[Critical-Warnings-and-Patterns.md](Critical-Warnings-and-Patterns.md)** | Fatal mistakes & required patterns | ~2,000 | VBA fatal mistakes, Transfer.dat case sensitivity, field naming, pre-flight checklists, error messages, anti-patterns |
 | **[VBA-API-Reference.md](VBA-API-Reference.md)** | Complete VBA OLE Automation API | ~13,000 | 33+ objects, properties, methods, collections, database field names, common patterns, inline debugging |
 | **[Import-Export-Reference.md](Import-Export-Reference.md)** | Transfer.dat scripting language | ~11,000 | Commands, table types, XML formatting, default scripts, inline debugging |
-| **[Calculated-Fields-Reference.md](Calculated-Fields-Reference.md)** | Expression language for formulas | ~9,000 | 50+ functions, operators, constants, user variables, formula patterns, inline debugging |
+| **[Calculated-Fields-Reference.md](Calculated-Fields-Reference.md)** | Expression language for formulas | ~10,000 | 50+ functions, operators, constants, user variables, formula patterns, inline debugging, Boeing enterprise best practices, text editor requirements |
+| **[Enterprise-Code-Fields-Reference.md](Enterprise-Code-Fields-Reference.md)** | Boeing code field standards | ~12,000 | C1-C99 code fields, CSPR/Cobra integration, mandatory/conditional fields, Boeing enterprise standards, VBA code field access |
 
-**Total Token Count:** ~35,000 tokens (86% reduction from original 250k token developer guide)
+**Total Token Count:** ~48,000 tokens (81% reduction from original 250k token developer guide)
 
 ### Configuration Files
 
 | File | Purpose |
 |------|---------|
-| **[SYSTEM-PROMPT-Template.md](SYSTEM-PROMPT-Template.md)** | Template for Custom GPT system instructions |
+| **[SYSTEM-PROMPT-Template.md](SYSTEM-PROMPT-Template.md)** | Template for Custom GPT system instructions (includes mandatory code formatting requirements) |
 | **README-Documentation.md** | This file - explains structure and usage |
 
-### Source & Archive Files
+### Source & Archive Files (in parent docs/ directory)
 
 | File | Purpose |
 |------|---------|
-| **[DeltekOpenPlanDeveloperGuide.md](DeltekOpenPlanDeveloperGuide.md)** | Original 27,161-line developer guide |
-| **[DeltekOpenPlanDeveloperGuide-LLM-Optimized.md](DeltekOpenPlanDeveloperGuide-LLM-Optimized.md)** | Ultra-compact version (8k tokens) |
-| **_ARCHIVE_DeltekOpenPlanDeveloperGuide-LLM-Reference-v1-SingleFile.md** | Previous single-file version (archived) |
+| **[../DeltekOpenPlanDeveloperGuide.md](../DeltekOpenPlanDeveloperGuide.md)** | Original 27,161-line developer guide |
+| **[../DeltekOpenPlanDeveloperGuide-LLM-Optimized.md](../DeltekOpenPlanDeveloperGuide-LLM-Optimized.md)** | Ultra-compact version (8k tokens) |
+| **../_ARCHIVE_DeltekOpenPlanDeveloperGuide-LLM-Reference-v1-SingleFile.md** | Previous single-file version (archived) |
+| **../CSPR_OPP_DataDictionary.csv** | Boeing enterprise code field standards (source data) |
+| **../BoeingReference/** | Boeing training materials (PowerPoints, PDFs) |
 
 ---
 
@@ -51,14 +56,15 @@ This directory contains optimized documentation for **Deltek Open Plan® Profess
 
 ### Step 3: Upload Knowledge Files
 
-In the **"Knowledge"** section, upload these four files:
+In the **"Knowledge"** section, upload these five files from `docs/llm-knowledge-base/`:
 
 1. ✅ `Critical-Warnings-and-Patterns.md`
 2. ✅ `VBA-API-Reference.md`
 3. ✅ `Import-Export-Reference.md`
 4. ✅ `Calculated-Fields-Reference.md`
+5. ✅ `Enterprise-Code-Fields-Reference.md`
 
-**Important:** All four files will be loaded into context at conversation start (~35k tokens total).
+**Important:** All five files will be loaded into context at conversation start (~48k tokens total).
 
 ### Step 4: Test Your Assistant
 
@@ -76,6 +82,9 @@ Try these test prompts:
 **Test 4 - Debugging:**
 > "My VBA script runs but the dates aren't updating. What's wrong?"
 
+**Test 5 - Boeing Enterprise Code Fields:**
+> "What code fields are mandatory for CSPR/Cobra integration?"
+
 ---
 
 ## 📊 Design Rationale
@@ -87,7 +96,8 @@ Try these test prompts:
 **Solution Evolution:**
 1. **First Optimization:** Single ultra-compact file (8k tokens) - too sparse for code generation
 2. **Second Enhancement:** Single reference file with examples (28k tokens) - better but not optimal for RAG
-3. **Current Structure:** Four focused files (35k tokens total) - **best balance**
+3. **Third Iteration:** Four focused files (35k tokens total) - good balance
+4. **Current Structure:** Five focused files (48k tokens total) - **best balance with enterprise content**
 
 **Benefits of Modular Approach:**
 
@@ -99,18 +109,20 @@ Try these test prompts:
 | **Topic Isolation** | Users typically ask about one topic per conversation |
 | **Future-Proof** | Can optimize individual files without restructuring |
 
-### Why ~35k Tokens (Not Less)?
+### Why ~48k Tokens (Not Less)?
 
 - **Critical Warnings** (~2k): Prevents 90% of common mistakes
 - **Complete API** (~13k): Covers all 33+ objects with examples
 - **All Commands** (~11k): Complete Transfer.dat reference with XML
-- **All Functions** (~9k): Complete calculated field function library
+- **All Functions** (~10k): Complete calculated field function library with Boeing best practices
+- **Enterprise Standards** (~12k): Boeing code field standards for CSPR/Cobra integration
 
 **Trade-off:** Slightly higher token usage, but:
 - ✅ Provides complete, accurate code examples
 - ✅ Reduces back-and-forth clarifications
 - ✅ Includes inline debugging for common issues
-- ✅ Still saves 215k tokens (86%) vs original
+- ✅ Includes Boeing enterprise-level best practices and standards
+- ✅ Still saves 202k tokens (81%) vs original
 
 ---
 
@@ -121,12 +133,12 @@ Try these test prompts:
 When a user starts a new conversation with your Custom GPT:
 
 1. **System Prompt Loads:** The instructions from `SYSTEM-PROMPT-Template.md` are active
-2. **All Knowledge Files Load:** All four reference files (~35k tokens) load into context
+2. **All Knowledge Files Load:** All five reference files (~48k tokens) load into context
 3. **User Query:** User asks a question
 4. **LLM Processing:**
-   - Checks critical rules from system prompt (memorized)
+   - Checks critical rules from system prompt (memorized, including mandatory code block formatting)
    - Retrieves relevant details from appropriate reference file(s)
-   - Generates response with inline warnings and complete code
+   - Generates response with inline warnings and complete code wrapped in markdown code blocks
 
 ### Conversation Flow Example
 
@@ -214,7 +226,7 @@ When a user starts a new conversation with your Custom GPT:
 ├── Constants (dates, durations, text, enums)
 ├── ⚠️ Field Name Warning
 ├── Operators (mathematical, relational, logical)
-├── User-Defined Variables
+├── User-Defined Variables (with Boeing enterprise examples)
 ├── Functions (50+ functions)
 │   ├── Mathematical
 │   ├── Date/Time
@@ -222,9 +234,39 @@ When a user starts a new conversation with your Custom GPT:
 │   ├── Logical
 │   ├── Data Access
 │   └── Hierarchy Functions
-├── 🐛 Debugging Guide
+├── 🏢 Boeing Enterprise Best Practices
+│   ├── Naming conventions (YourID_CF_Description)
+│   ├── Expression length limits
+│   ├── Development workflow
+│   └── Text editor requirements (Notepad vs Word)
+├── 🐛 Debugging Guide (with most common errors from Boeing training)
 ├── ✅ Best Practices
 └── Common Formula Patterns
+```
+
+### Enterprise-Code-Fields-Reference.md
+
+**Structure:**
+```
+├── Overview (Boeing enterprise standards for CSPR/Cobra integration)
+├── Code Field Requirement Levels
+├── Activity-Level Code Fields (C1-C99)
+│   ├── Critical mandatory fields (C4, C6, C11, C35, C42)
+│   ├── Conditional mandatory fields (by integration type)
+│   └── Optional/program-specific fields
+├── Project-Level Code Fields (C1-C90)
+│   ├── CSPR configuration fields
+│   └── Schedule Visibility Data (SVD) fields
+├── Quick Reference Tables
+│   ├── Mandatory fields
+│   └── Conditional mandatory fields
+├── 🏢 Best Practices for Code Field Usage
+│   ├── Understanding program requirements
+│   ├── Maintaining data integrity
+│   ├── VBA access to code fields
+│   └── Import/Export considerations
+├── 🐛 Common Issues and Solutions
+└── 📚 Related Boeing Documents (IPSG references)
 ```
 
 ---
@@ -252,6 +294,13 @@ When a user starts a new conversation with your Custom GPT:
 - New functions are documented
 - Additional formula patterns are developed
 - Function syntax needs clarification
+- Boeing enterprise best practices evolve
+
+**Update Enterprise-Code-Fields-Reference.md when:**
+- Boeing code field standards change
+- New IPSG documents are released
+- CSPR/Cobra integration requirements update
+- New system integrations are added (MES, IGOLD, etc.)
 
 ### How to Update Files
 
@@ -287,9 +336,10 @@ wc -c Critical-Warnings-and-Patterns.md
 - Critical-Warnings: ~2,000 tokens (max 3,000)
 - VBA-API: ~13,000 tokens (max 15,000)
 - Import-Export: ~11,000 tokens (max 13,000)
-- Calculated-Fields: ~9,000 tokens (max 11,000)
+- Calculated-Fields: ~10,000 tokens (max 12,000)
+- Enterprise-Code-Fields: ~12,000 tokens (max 15,000)
 
-**Total Budget:** Keep under 40,000 tokens total
+**Total Budget:** Keep under 55,000 tokens total
 
 ---
 
@@ -313,9 +363,27 @@ wc -c Critical-Warnings-and-Patterns.md
 
 ## 📝 Changelog
 
-### Version 2.0 - Modular RAG-Optimized Structure (Current)
+### Version 2.1 - Enterprise Integration & Code Formatting (Current)
 
 **Date:** 2025-10-28
+
+**Changes:**
+- **Added Enterprise-Code-Fields-Reference.md** - Boeing code field standards for CSPR/Cobra integration
+- **Enhanced Calculated-Fields-Reference.md** with:
+  - Boeing enterprise best practices (naming conventions, text editor requirements)
+  - Complex user-defined variable examples from Boeing training
+  - Most common errors from Boeing training data
+  - Known bugs/defects (< operator with variables)
+- **Updated SYSTEM-PROMPT-Template.md** with:
+  - Mandatory code formatting requirements (all code MUST be in markdown code blocks)
+  - Reference to five files instead of four
+  - Explicit examples of correct vs incorrect formatting
+- **Reorganized file structure** - Moved all RAG files to `docs/llm-knowledge-base/` subdirectory
+- Total: ~48k tokens across 5 files
+
+### Version 2.0 - Modular RAG-Optimized Structure
+
+**Date:** 2025-10-28 (earlier)
 
 **Changes:**
 - Split single LLM-Reference file into four focused files
@@ -345,11 +413,11 @@ wc -c Critical-Warnings-and-Patterns.md
 
 ### For Custom GPT Creators
 
-1. **Copy the system prompt exactly** - The critical rules section is carefully crafted
-2. **Upload all four files** - They work together as a complete reference
-3. **Test with real scenarios** - Use actual user questions from your workflow
+1. **Copy the system prompt exactly** - The critical rules section (including code formatting) is carefully crafted
+2. **Upload all five files** - They work together as a complete reference
+3. **Test with real scenarios** - Use actual user questions from your workflow, verify code outputs are in markdown blocks
 4. **Refine the tone** - Adjust system prompt personality to match your needs
-5. **Monitor token usage** - Watch for context window issues with long conversations
+5. **Monitor token usage** - Watch for context window issues with long conversations (~48k baseline)
 
 ### For End Users (Using the Custom GPT)
 
@@ -481,5 +549,5 @@ For Deltek Open Plan product support:
 ---
 
 **Last Updated:** 2025-10-28
-**Documentation Version:** 2.0 (Modular RAG-Optimized)
+**Documentation Version:** 2.1 (Enterprise Integration & Code Formatting)
 **Repository:** https://github.com/devinmlowe/Deltek-OPP-Docs
